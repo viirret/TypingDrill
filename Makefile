@@ -1,14 +1,13 @@
-# all the files
-FILES = main.cc Renderer.cc Window.cc
+HEADER	=	$(wildcard *.hh)
+SOURCE	=	$(wildcard *.cc)
+OBJECT	=	$(addprefix obj/,$(addsuffix .o,$(SOURCE)))
 
-# compiler
-CC = g++
+build: obj/ $(OBJECT)
+	@g++ -o ProTyper $(OBJECT) -lSDL2 -lSDL2_image -lSDL2_ttf
 
-# link the libraries
-LINK = -lSDL2 -lSDL2_image -lSDL2_ttf
+obj/%.cc.o:	%.cc $(HEADER)
+	@echo "Building $<"
+	@g++ -c -o $@ $< -std=c++17 -pedantic -Wall -Wextra -g
 
-# executable name
-OUT = ProTyper
-
-all : $(FILES)
-	$(CC) $(FILES) $(LINK) -o $(OUT) -g
+obj/:
+	@mkdir -p obj
