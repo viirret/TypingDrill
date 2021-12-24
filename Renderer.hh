@@ -11,7 +11,7 @@ namespace Renderer
 	SDL_Renderer* get();
 	
 	// create renderer
-	bool CreateRender();
+	bool CreateRenderer();
 
 	// free memory
 	void free();

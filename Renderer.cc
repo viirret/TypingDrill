@@ -8,7 +8,7 @@ void Renderer::set(SDL_Renderer* _renderer) { renderer = _renderer; }
 SDL_Renderer* Renderer::get() { return renderer; }
 
 // make renderer
-bool Renderer::CreateRender()
+bool Renderer::CreateRenderer()
 {
 	// flag
 	bool w = true;
