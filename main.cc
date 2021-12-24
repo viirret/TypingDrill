@@ -6,6 +6,7 @@
 #include "FontLoader.hh"
 #include "Texture.hh"
 #include "Window.hh"
+#include "TextMaker.hh"
 
 int main()
 {
@@ -57,8 +58,11 @@ int main()
 			SDL_SetRenderDrawColor(Renderer::get(), 0xFF, 0xFF, 0xFF, 0xFF);
 			SDL_RenderClear(Renderer::get());
 
-			// load text here
+			// load text
+			TextMaker::Make("testi", mainTexture);
+
 			// renderer texture
+			mainTexture.render(Screen::width - mainTexture.getWidth() / 2, Screen::height - mainTexture.getHeight() / 2);
 
 			// update screen
 			SDL_RenderPresent(Renderer::get());
