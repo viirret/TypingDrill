@@ -1,7 +1,6 @@
 #include <SDL2/SDL.h>
 #include <SDL2/SDL_image.h>
 #include <SDL2/SDL_ttf.h>
-#include <iostream>
 #include "Renderer.hh"
 #include "FontLoader.hh"
 #include "Texture.hh"
@@ -72,8 +71,8 @@ int main()
 	// free font
 	TTF_CloseFont(FontLoader::getFont());
 
-	// destroy renderer
-	SDL_DestroyRenderer(Renderer::get());
+	// destroy renderer and window
+	Renderer::free();
 
 	// close SDL
 	TTF_Quit();
