@@ -2,7 +2,9 @@
 
 bool TextMaker::Make(std::string text, Texture texture)
 {
+	// flag
 	bool w = true;
+
 	SDL_Color textColor = { 0, 0, 0 };
 	if(!texture.loadFromText(text, textColor))
 	{

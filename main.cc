@@ -61,7 +61,7 @@ int main()
 			TextMaker::Make("testi", mainTexture);
 
 			// renderer texture
-			mainTexture.render(Screen::width - mainTexture.getWidth() / 2, Screen::height - mainTexture.getHeight() / 2);
+			mainTexture.render((Screen::width - mainTexture.getWidth()) / 2, (Screen::height - mainTexture.getHeight()) / 2);
 
 			// update screen
 			SDL_RenderPresent(Renderer::get());
@@ -77,7 +77,7 @@ int main()
 	// close SDL
 	TTF_Quit();
 	IMG_Quit();
-	SDL_Quit();;
+	SDL_Quit();
 
 
 	return 0;
