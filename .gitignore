@@ -1,4 +1,14 @@
-finalMakefile
+# ignore cmake stuff
+CMakeCache.txt
+CMakeFiles
+cmake_install.cmake
+
+# ignore Makefile created by cmake
+Makefile
+
+# ignore executable
 ProTyper
-plan.txt
-obj/
+
+# ignore metadata from valgrind
+vgcore.*
+callgrind.*
