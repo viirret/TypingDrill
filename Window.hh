@@ -1,20 +1,24 @@
-#ifndef WINDOW_HH
-#define WINDOW_HH
+#ifndef WINDOW_H
+#define WINDOW_H
 
-#include "Screen.hh"
 #include <SDL2/SDL.h>
 #include <iostream>
+#include "ScreenSize.hh"
+#include "Renderer.hh"
 
 class Window
 {
 	public:
 		Window();
 		~Window();
-		SDL_Window* getWindow();
+		void resize(SDL_Event e);
 	private:
-		bool createWindow();
-		void free();
+		void setSizes() const;
 		SDL_Window* window;
+		SDL_Renderer* renderer;
+		int width;
+		int height;
 };
+
 
 #endif

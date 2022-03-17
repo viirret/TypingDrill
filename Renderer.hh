@@ -2,20 +2,16 @@
 #define RENDERER_HH
 
 #include <SDL2/SDL.h>
-#include "Window.hh"
 
 namespace Renderer
 {
-	// set and get
-	void set(SDL_Renderer* renderer);
 	SDL_Renderer* get();
-	
-	// create renderer
-	bool CreateRenderer();
+	void set(SDL_Renderer* _renderer);
 
-	// free memory
-	void free();
-
+	void setColor(int r, int g, int b);
+	void clear();
+	void render();
+	void fillRect(SDL_Rect r);
 }
 
 #endif

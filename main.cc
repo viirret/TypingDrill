@@ -1,11 +1,8 @@
 #include <SDL2/SDL.h>
 #include <SDL2/SDL_image.h>
 #include <SDL2/SDL_ttf.h>
-#include "Renderer.hh"
-#include "FontLoader.hh"
-#include "Texture.hh"
-#include "Window.hh"
-#include "TextMaker.hh"
+#include <iostream>
+#include "Game.hh"
 
 int main()
 {
@@ -14,71 +11,26 @@ int main()
 		std::cout << "SDL could not initialize! Error: " << SDL_GetError() << "\n";
 	else
 	{
-		// set texture filtering to linear
-		if(!SDL_SetHint(SDL_HINT_RENDER_SCALE_QUALITY, "1"))
-			std::cout << "Linear texture filtering not enabled\n";
-
-		// create renderer
-		Renderer::CreateRenderer();
-
 		// initialize PNG loading
-		int imgFlags = IMG_INIT_PNG;
-		if(!(IMG_Init(imgFlags) &imgFlags))
+		if(!(IMG_Init(IMG_INIT_PNG) &IMG_INIT_PNG))
 			std::cout << "SDL_image could not initialize! SDL_Image Error: " << IMG_GetError() << "\n";
 		
 		// initialize SDL_ttf
 		if(TTF_Init() == -1)
 			std::cout << "SDL_ttf could not initialize! SDL_ttf Error: " << TTF_GetError() << "\n";
 
-		// load font
-		FontLoader::setup();
+		Game game;
 
-		// the main texture
-		Texture mainTexture;
-
-		// main loop flag
-		bool quit = false;
-
-		SDL_Event e;
-
-		while(!quit)
+		while(!game.close)
 		{
-			// handle events on queue
-			while(SDL_PollEvent(&e) != 0)
-			{
-				if(e.type == SDL_QUIT)
-				{
-					mainTexture.free();
-					quit = true;
-				}
-			}
-
-			// clear screen
-			SDL_SetRenderDrawColor(Renderer::get(), 0xFF, 0xFF, 0xFF, 0xFF);
-			SDL_RenderClear(Renderer::get());
-
-			// load text
-			TextMaker::Make("testi", mainTexture);
-
-			// renderer texture
-			mainTexture.render((Screen::width - mainTexture.getWidth()) / 2, (Screen::height - mainTexture.getHeight()) / 2);
-
-			// update screen
-			SDL_RenderPresent(Renderer::get());
+			game.update();
 		}
 	}
 	
-	// free font
-	TTF_CloseFont(FontLoader::getFont());
-
-	// destroy renderer and window
-	Renderer::free();
-
 	// close SDL
 	TTF_Quit();
 	IMG_Quit();
 	SDL_Quit();
-
 
 	return 0;
 }

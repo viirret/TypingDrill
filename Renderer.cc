@@ -1,45 +1,18 @@
 #include "Renderer.hh"
 
-// the actual renderer
-SDL_Renderer* renderer;
-
-// the window
-Window* window;
-
-// setter and getter
-void Renderer::set(SDL_Renderer* _renderer) { renderer = _renderer; }
-SDL_Renderer* Renderer::get() { return renderer; }
-
-// make renderer
-bool Renderer::CreateRenderer()
+namespace Renderer
 {
-	// flag
-	bool w = true;
+	// the renderer
+	static SDL_Renderer* renderer;
 
-	// create new window
-	window = new Window;
-
-	renderer = SDL_CreateRenderer(window->getWindow(), -1, SDL_RENDERER_ACCELERATED | SDL_RENDERER_PRESENTVSYNC);
-	if(!renderer)
-	{
-		std::cout << "Renderer could not be created! Error: " << SDL_GetError() << "\n";
-		w = false;
-	}
-	// initialize color
-	else
-		SDL_SetRenderDrawColor(renderer, 0xFF, 0xFF, 0xFF, 0xFF);
+	// setter and getter
+	void set(SDL_Renderer* _renderer) { renderer = _renderer; }
+	SDL_Renderer* get() { return renderer; }
 	
-	return w;
+	// render functions
+	void setColor(int r, int g, int b) { SDL_SetRenderDrawColor(renderer, r, g, b, 255); }
+	void clear() { SDL_RenderClear(renderer); }
+	void render() { SDL_RenderPresent(renderer); }
+	void fillRect(SDL_Rect r) { SDL_RenderFillRect(renderer, &r); }
 }
-
-// free memory
-void Renderer::free()
-{
-	SDL_DestroyRenderer(renderer);
-	delete window;
-	renderer = nullptr;
-	window = nullptr;
-}
-
-
 
