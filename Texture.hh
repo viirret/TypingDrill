@@ -37,6 +37,8 @@ class Texture
 		// image dimemsions
 		int width;
 		int height;
+
+		std::string text;
 };
 
 #endif

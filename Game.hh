@@ -6,6 +6,7 @@
 #include "FontLoader.hh"
 #include "Texture.hh"
 #include "Word.hh"
+#include "Color.hh"
 
 class Game
 {
@@ -21,6 +22,7 @@ class Game
 		SDL_Event e;
 		Window* window;
 		Word word;
+		SDL_Color color;
 };
 
 #endif

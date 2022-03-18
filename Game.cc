@@ -21,7 +21,6 @@ Game::~Game()
 	delete window;
 }
 
-
 void Game::update()
 {
 	eventHandler();
@@ -30,7 +29,8 @@ void Game::update()
 
 void Game::render()
 {
-	Renderer::setColor(255, 255, 255);
+	// the background
+	Renderer::setColor(64, 64, 64);
 	Renderer::clear();
 	
 	Texture::the().render();
@@ -51,7 +51,7 @@ void Game::eventHandler()
 
 void Game::createSentence()
 {
-	Texture::the().loadFromText(word.getSentence(), { 0, 0, 0, 255 });
+	Texture::the().loadFromText(word.getSentence(), Color::regular);
 }
 
 

@@ -12,6 +12,8 @@ Texture::~Texture() { free(); }
 
 bool Texture::loadFromText(std::string text, SDL_Color color)
 {
+	this->text = text;
+
 	// get rid the old texture
 	free();
 
@@ -54,7 +56,7 @@ void Texture::free()
 void Texture::render()
 {
 	// set rendering space and render to screen
-	SDL_Rect renderQuad = { Screen::getWidth() / 4, Screen::getHeight() / 2, width, height };
+	SDL_Rect renderQuad = { Screen::getWidth() / 20, Screen::getHeight() / 4, width, height };
 
 	// render to screen
 	SDL_RenderCopy(Renderer::get(), texture, nullptr, &renderQuad);
