@@ -10,45 +10,6 @@ Texture::Texture()
 
 Texture::~Texture() { free(); }
 
-bool Texture::loadFromFile(std::string path)
-{
-	// get rid of old texture
-	free();
-
-	// the texture
-	SDL_Texture* t = nullptr;
-	
-	// load image from path
-	SDL_Surface* loadedSurface = IMG_Load(path.c_str());
-
-	if(!loadedSurface)
-		std::cout << "Unable to load image " << path.c_str() << " SDL_image Error: " << IMG_GetError() << "\n";
-	else
-	{
-		// set color key
-		SDL_SetColorKey(loadedSurface, SDL_TRUE, SDL_MapRGB(loadedSurface->format, 0, 0xFF, 0xFF));
-
-		// create new texture
-		t = SDL_CreateTextureFromSurface(Renderer::get(), loadedSurface);
-
-		if(!t)
-			std::cout << "Unable to create texture from " << path.c_str() << " SDL_Error: " << SDL_GetError() << "\n";
-		else
-		{
-			// get image dimensions
-			width = loadedSurface->w;
-			height = loadedSurface->h;
-		}
-
-		// get rid of the loaded surface
-		SDL_FreeSurface(loadedSurface);
-	}
-
-	// return accordingly
-	texture = t;
-	return texture != nullptr;
-}
-
 bool Texture::loadFromText(std::string text, SDL_Color color)
 {
 	// get rid the old texture
@@ -90,26 +51,13 @@ void Texture::free()
 	}
 }
 
-// set color, set blendmode, set alpha
-
-void Texture::render(int x, int y, SDL_Rect* clip, double angle, SDL_Point* center, SDL_RendererFlip flip)
+void Texture::render()
 {
 	// set rendering space and render to screen
-	SDL_Rect renderQuad = { x, y, width, height };
+	SDL_Rect renderQuad = { Screen::getWidth() / 2, Screen::getHeight() / 2, width, height };
 
-	// set clip rendering dimensions
-	if(clip)
-	{
-		renderQuad.w = clip->w;
-		renderQuad.h = clip->h;
-	}
-
-	// finally render to screen
-	SDL_RenderCopyEx(Renderer::get(), texture, clip, &renderQuad, angle, center, flip);
+	// render to screen
+	SDL_RenderCopy(Renderer::get(), texture, nullptr, &renderQuad);
 }
-
-
-int Texture::getWidth() { return width; }
-int Texture::getHeight() { return height; }
 
 

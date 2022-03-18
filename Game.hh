@@ -4,6 +4,7 @@
 #include <SDL2/SDL.h>
 #include "Window.hh"
 #include "FontLoader.hh"
+#include "Texture.hh"
 
 class Game
 {

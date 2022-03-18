@@ -10,7 +10,6 @@ add_executable(ProTyper
 	FontLoader.cc
 	main.cc
 	Renderer.cc
-	TextMaker.cc
 	Texture.cc
 	Window.cc
 	Game.cc

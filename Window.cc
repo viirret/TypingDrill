@@ -2,10 +2,6 @@
 
 Window::Window()
 {
-	// get monitor resolution
-	// SDL_DisplayMode mode;
-	// SDL_GetCurrentDisplayMode(0, &mode);
-
 	// Set width and height
 	width = 800;
 	height = 600;
