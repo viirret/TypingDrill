@@ -14,6 +14,7 @@ add_executable(ProTyper
 	Window.cc
 	Game.cc
 	ScreenSize.cc
+	Word.cc
 	)
 
 target_link_libraries(ProTyper ${SDL2_LIBRARIES} -lSDL2_image -lSDL2_ttf)

@@ -24,12 +24,12 @@ class Texture
 
 		// renders texture, set these values in contructor
 		void render();
+			
+		void free();
 
 	private:
 		Texture();
 		~Texture();
-
-		void free();
 
 		// actual texture
 		SDL_Texture* texture;

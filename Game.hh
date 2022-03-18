@@ -5,6 +5,7 @@
 #include "Window.hh"
 #include "FontLoader.hh"
 #include "Texture.hh"
+#include "Word.hh"
 
 class Game
 {
@@ -16,8 +17,10 @@ class Game
 	private:
 		void render();
 		void eventHandler();
+		void createSentence();
 		SDL_Event e;
 		Window* window;
+		Word word;
 };
 
 #endif

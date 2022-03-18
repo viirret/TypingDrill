@@ -8,15 +8,17 @@ Game::Game()
 	// load the font
 	FontLoader::setup();
 
-	Texture::the().loadFromText("testi", { 0, 0, 0, 255 });
-	
+	// create a sentence
+	createSentence();
+
 	close = false;
 }
 
 Game::~Game()
 {
-	delete window;
 	TTF_CloseFont(FontLoader::getFont());
+	Texture::the().free();
+	delete window;
 }
 
 
@@ -46,3 +48,10 @@ void Game::eventHandler()
 			close = true;
 	}
 }
+
+void Game::createSentence()
+{
+	Texture::the().loadFromText(word.getSentence(), { 0, 0, 0, 255 });
+}
+
+
