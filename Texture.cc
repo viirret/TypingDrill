@@ -6,19 +6,20 @@ Texture::Texture()
 	texture = nullptr;
 	width = 0;
 	height = 0;
+
+	for(int i = 97; i <= 122; i++)
+		ascii += i;
 }
 
 Texture::~Texture() { free(); }
 
-bool Texture::loadFromText(std::string text, SDL_Color color)
+bool Texture::loadFromText(std::string character, SDL_Color color)
 {
-	this->text = text;
-
 	// get rid the old texture
 	free();
 
 	// render text surface
-	SDL_Surface* textSurface = TTF_RenderText_Solid(FontLoader::getFont(), text.c_str(), color);
+	SDL_Surface* textSurface = TTF_RenderText_Solid(FontLoader::getFont(), character.c_str(), color);
 	if(!textSurface)
 		std::cout << "Unable to render text surface! SDL_ttf Error: " << TTF_GetError() << "\n";
 	else
@@ -42,6 +43,7 @@ bool Texture::loadFromText(std::string text, SDL_Color color)
 	return texture != nullptr;
 }
 
+
 void Texture::free()
 {
 	if(texture)
@@ -53,12 +55,12 @@ void Texture::free()
 	}
 }
 
-void Texture::render()
+void Texture::render(int x, int y, int index)
 {
-	// set rendering space and render to screen
-	SDL_Rect renderQuad = { Screen::getWidth() / 20, Screen::getHeight() / 4, width, height };
+	// set rendering space
+	SDL_Rect renderQuad = { x, y, width, height };
 
-	// render to screen
+	// render
 	SDL_RenderCopy(Renderer::get(), texture, nullptr, &renderQuad);
 }
 

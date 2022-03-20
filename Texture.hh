@@ -9,28 +9,23 @@
 #include "Renderer.hh"
 #include "FontLoader.hh"
 #include "ScreenSize.hh"
+#include "Color.hh"
 
 class Texture
 {
 	public:
-		static Texture& the()
-		{
-			static Texture t;
-			return t;
-		}
+		Texture();
+		~Texture();
 
 		// create image from font string
 		bool loadFromText(std::string text, SDL_Color color);
 
 		// renders texture, set these values in contructor
-		void render();
+		void render(int x, int y, int index);
 			
 		void free();
 
 	private:
-		Texture();
-		~Texture();
-
 		// actual texture
 		SDL_Texture* texture;
 
@@ -38,7 +33,7 @@ class Texture
 		int width;
 		int height;
 
-		std::string text;
+		std::string ascii;
 };
 
 #endif

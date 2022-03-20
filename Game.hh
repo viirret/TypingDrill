@@ -22,7 +22,9 @@ class Game
 		SDL_Event e;
 		Window* window;
 		Word word;
-		SDL_Color color;
+		Texture text;
+		std::string sentence;
+		int checkIndex;
 };
 
 #endif

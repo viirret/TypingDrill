@@ -11,13 +11,14 @@ Game::Game()
 	// create a sentence
 	createSentence();
 
+	checkIndex = 0;
+
 	close = false;
 }
 
 Game::~Game()
 {
 	TTF_CloseFont(FontLoader::getFont());
-	Texture::the().free();
 	delete window;
 }
 
@@ -33,8 +34,9 @@ void Game::render()
 	Renderer::setColor(64, 64, 64);
 	Renderer::clear();
 	
-	Texture::the().render();
+	text.render(Screen::getWidth() / 20, Screen::getHeight() / 4, 4);
 
+	// main rendering
 	Renderer::render();	
 }
 
@@ -46,12 +48,23 @@ void Game::eventHandler()
 
 		if((e.type == SDL_KEYDOWN && e.key.keysym.sym == SDLK_ESCAPE) || e.type == SDL_QUIT)
 			close = true;
+		
+		else if(e.type == SDL_KEYDOWN)
+		{
+			if(e.key.keysym.sym == sentence[checkIndex])
+			{
+				checkIndex++;
+				SDL_Log("%s", "Correct!");
+			}
+		}
 	}
 }
 
 void Game::createSentence()
 {
-	Texture::the().loadFromText(word.getSentence(), Color::regular);
+	sentence = word.getSentence();
+	
+	text.loadFromText(sentence, Color::regular);
 }
 
 
