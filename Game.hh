@@ -18,9 +18,9 @@ class Game
 	private:
 		void render();
 		void eventHandler();
-		void createSentence();
+		bool createSentence();
 		SDL_Event e;
-		Window* window;
+		Window window;
 		Word word;
 		Texture text;
 		std::string sentence;

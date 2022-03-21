@@ -8,7 +8,7 @@
 namespace FontLoader
 {
 	bool setup();
-	TTF_Font* getFont();
+	TTF_Font* get();
 }
 
 #endif

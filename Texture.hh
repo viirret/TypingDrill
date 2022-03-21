@@ -21,7 +21,7 @@ class Texture
 		bool loadFromText(std::string text, SDL_Color color);
 
 		// renders texture, set these values in contructor
-		void render(int x, int y, int index);
+		void render(int x, int y, char chr);
 			
 		void free();
 

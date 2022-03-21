@@ -14,13 +14,13 @@ Window::Window()
 
 	// if window creation fails
 	if(!window)
-		std::cout << "Could not create window! " << SDL_GetError() << "\n";
+		SDL_Log("Could not create window! %s\n", SDL_GetError());
 	else
 	{
 		// create the renderer
 		renderer = SDL_CreateRenderer(window, -1, SDL_RENDERER_ACCELERATED | SDL_RENDERER_PRESENTVSYNC);
 		if(!renderer)
-			std::cout << "Could not create renderer! " << SDL_GetError() << "\n";
+			SDL_Log("Could not create renderer! %s\n", SDL_GetError());
 		else
 		{
 			// set the renderer

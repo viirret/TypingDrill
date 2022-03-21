@@ -10,18 +10,15 @@ template<typename T> T randomLine(T from, T to)
 
 Word::Word()
 {
+	total_lines = 0;
 	std::string line;
 	file.open("words.txt");
+
 	while(std::getline(file, line))
 	{
 		total_lines++;
 		lines.push_back(line);
 	}
-}
-
-Word::~Word()
-{
-	file.close();
 }
 
 std::string Word::getSentence()

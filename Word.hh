@@ -12,13 +12,12 @@ class Word
 {
 	public:
 		Word();
-		~Word();
 		std::string getSentence();
 
 	private:
 		std::ifstream file;
 		std::vector<std::string> lines;
-		int total_lines = 0;
+		int total_lines;
 };
 
 #endif

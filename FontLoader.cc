@@ -12,11 +12,11 @@ bool FontLoader::setup()
 
 	if(!font)
 	{
-		std::cout << "Failed to load the font! SDL_ttd Error: " << TTF_GetError() << "\n";
+		SDL_Log("Failed to load the font! SDL_ttd Error: %s\n", TTF_GetError());
 		w = false;
 	}
 
 	return w;
 }
 
-TTF_Font* FontLoader::getFont() { return font; }
+TTF_Font* FontLoader::get() { return font; }

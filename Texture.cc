@@ -19,15 +19,15 @@ bool Texture::loadFromText(std::string character, SDL_Color color)
 	free();
 
 	// render text surface
-	SDL_Surface* textSurface = TTF_RenderText_Solid(FontLoader::getFont(), character.c_str(), color);
+	SDL_Surface* textSurface = TTF_RenderText_Solid(FontLoader::get(), character.c_str(), color);
 	if(!textSurface)
-		std::cout << "Unable to render text surface! SDL_ttf Error: " << TTF_GetError() << "\n";
+		SDL_Log("Unable to render text surface! SDL_ttf Error: %s\n", TTF_GetError());
 	else
 	{
 		// create texture from surface pixels
 		texture = SDL_CreateTextureFromSurface(Renderer::get(), textSurface);
 		if(!texture)
-			std::cout << "Unable to create texture from rendered text! SDL_Error: " << SDL_GetError() << "\n";
+			SDL_Log("Unable to create texture from rendered text! SDL_Error: %s\n", SDL_GetError());
 		else
 		{
 			// get image dimensions
@@ -55,10 +55,14 @@ void Texture::free()
 	}
 }
 
-void Texture::render(int x, int y, int index)
+void Texture::render(int x, int y, char chr)
 {
 	// set rendering space
 	SDL_Rect renderQuad = { x, y, width, height };
+
+	int end = chr - ascii[0];
+
+	//SDL_Log("%d\n", end);
 
 	// render
 	SDL_RenderCopy(Renderer::get(), texture, nullptr, &renderQuad);
