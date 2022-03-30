@@ -16,24 +16,16 @@ class Texture
 	public:
 		Texture();
 		~Texture();
-
-		// create image from font string
-		bool loadFromText(std::string text, SDL_Color color);
+		void load(std::string word, SDL_Color color);
 
 		// renders texture, set these values in contructor
-		void render(int x, int y, char chr);
+		void render(int x, int y, SDL_Color color);
 			
 		void free();
 
 	private:
 		// actual texture
 		SDL_Texture* texture;
-
-		// image dimemsions
-		int width;
-		int height;
-
-		std::string ascii;
 };
 
 #endif

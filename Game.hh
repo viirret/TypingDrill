@@ -2,6 +2,7 @@
 #define GAME_HH
 
 #include <SDL2/SDL.h>
+#include <string>
 #include "Window.hh"
 #include "FontLoader.hh"
 #include "Texture.hh"
@@ -22,9 +23,10 @@ class Game
 		SDL_Event e;
 		Window window;
 		Word word;
-		Texture text;
 		std::string sentence;
 		int checkIndex;
+
+		Texture test;
 };
 
 #endif

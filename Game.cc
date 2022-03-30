@@ -46,8 +46,8 @@ void Game::render()
 	// the background
 	Renderer::setColor(64, 64, 64);
 	Renderer::clear();
-	
-	text.render(Screen::getWidth() / 20, Screen::getHeight() / 4, 4);
+
+	test.render(Screen::getWidth() / 2, Screen::getHeight() / 2, Color::error);
 
 	// main rendering
 	Renderer::render();	
@@ -76,11 +76,11 @@ void Game::eventHandler()
 bool Game::createSentence()
 {
 	sentence = word.getSentence();
-
 	if(sentence.length() > 0)
-		if(text.loadFromText(sentence, Color::regular))
-			return true;
-
+	{
+		test.load("test", Color::used);
+		return true;
+	}
 	return false;	
 }
 
