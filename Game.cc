@@ -28,7 +28,7 @@ Game::Game()
 Game::~Game()
 {
 	TTF_CloseFont(FontLoader::get());
-
+	
 	// close SDL
 	TTF_Quit();
 	IMG_Quit();
@@ -47,7 +47,10 @@ void Game::render()
 	Renderer::setColor(64, 64, 64);
 	Renderer::clear();
 
-	test.render(Screen::getWidth() / 2, Screen::getHeight() / 2, Color::error);
+	for(int i = 0; i < (int)textures.size(); i++)
+	{
+		textures[i].render(25 * i, Screen::getHeight() / 2, Color::white);
+	}
 
 	// main rendering
 	Renderer::render();	
@@ -64,7 +67,7 @@ void Game::eventHandler()
 		
 		else if(e.type == SDL_KEYDOWN)
 		{
-			if(e.key.keysym.sym == sentence[checkIndex])
+			if(e.key.keysym.sym == sentence[checkIndex] || (isspace(sentence[checkIndex]) && e.key.keysym.sym == 32))
 			{
 				checkIndex++;
 				SDL_Log("%s", "Correct!");
@@ -78,7 +81,9 @@ bool Game::createSentence()
 	sentence = word.getSentence();
 	if(sentence.length() > 0)
 	{
-		test.load("test", Color::used);
+		for(auto& i : sentence)
+			textures.emplace_back(std::string(1, i), Color::white);
+
 		return true;
 	}
 	return false;	

@@ -26,7 +26,7 @@ class Game
 		std::string sentence;
 		int checkIndex;
 
-		Texture test;
+		std::vector<Texture> textures;
 };
 
 #endif

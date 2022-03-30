@@ -14,17 +14,12 @@
 class Texture
 {
 	public:
-		Texture();
+		Texture(std::string word, SDL_Color color);
+		Texture(Texture&& tex);
 		~Texture();
-		void load(std::string word, SDL_Color color);
-
-		// renders texture, set these values in contructor
 		void render(int x, int y, SDL_Color color);
-			
-		void free();
 
 	private:
-		// actual texture
 		SDL_Texture* texture;
 };
 

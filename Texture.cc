@@ -1,11 +1,6 @@
 #include "Texture.hh"
 
-Texture::Texture()
-{
-	texture = nullptr;
-}
-
-void Texture::load(std::string word, SDL_Color color)
+Texture::Texture(std::string word, SDL_Color color) 
 {
 	// render text surface
 	SDL_Surface* textSurface = TTF_RenderText_Solid(FontLoader::get(), word.c_str(), color);
@@ -23,14 +18,16 @@ void Texture::load(std::string word, SDL_Color color)
 	}
 }
 
-Texture::~Texture() { free(); }
+Texture::Texture(Texture&& rhs) : texture(rhs.texture)
+{
+	rhs.texture = nullptr;
+}
 
-void Texture::free()
+Texture::~Texture() 
 {
 	if(texture)
 	{
 		SDL_DestroyTexture(texture);
-		texture = nullptr;
 	}
 }
 
