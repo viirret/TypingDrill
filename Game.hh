@@ -19,13 +19,13 @@ class Game
 	private:
 		void render();
 		void eventHandler();
-		bool createSentence();
+		void createSentence();
+		void restore();
 		SDL_Event e;
 		Window window;
 		Word word;
 		std::string sentence;
 		int checkIndex;
-
 		std::vector<Texture> textures;
 		std::vector<SDL_Color> colors;
 		SDL_Color drawColor;

@@ -17,9 +17,8 @@ Game::Game()
 	// load the font
 	FontLoader::setup();
 
-	// create a sentence
-	if(!createSentence())
-		SDL_Log("Could not create sentence! %s\n", SDL_GetError());
+	// create the first sentence
+	createSentence();
 
 	checkIndex = 0;
 	close = false;
@@ -38,6 +37,7 @@ Game::~Game()
 
 void Game::update()
 {
+	restore();
 	eventHandler();
 	render();
 }
@@ -72,39 +72,42 @@ void Game::eventHandler()
 			if((e.key.keysym.sym == sentence[checkIndex]) || (isspace(sentence[checkIndex]) && e.key.keysym.sym == 32))
 			{
 				if(isspace(sentence[checkIndex]) && e.key.keysym.sym == 32)
-					textures.at(checkIndex).reload("_", Color::regular);
+					textures.at(checkIndex).reload("_", drawColor);
 
 				colors[checkIndex] = drawColor;
 				checkIndex++;
 				drawColor = Color::regular;
-				SDL_Log("%s", "Correct!");
 			}
-			
+
 			// error in writing
 			else
 			{
 				drawColor = Color::error;
-				SDL_Log("%s", "Incorrect");
 			}
 		}
 	}
 }
 
-bool Game::createSentence()
+void Game::restore()
+{
+	if(checkIndex == (int)sentence.length())
+	{
+		checkIndex = 0;
+		colors.clear();
+		textures.clear();
+		createSentence();
+	}
+}
+
+void Game::createSentence()
 {
 	sentence = word.getSentence();
 
-	if(sentence.length() > 0)
+	for(int i = 0; i < (int)sentence.length(); i++)
 	{
-		for(int i = 0; i < (int)sentence.length(); i++)
-		{
-			colors.push_back(Color::white);
-			textures.emplace_back(std::string(1, sentence[i]), colors[i]);
-		}
-
-		return true;
+		colors.push_back(Color::white);
+		textures.emplace_back(std::string(1, sentence[i]), colors[i]);
 	}
-	return false;	
 }
 
 
