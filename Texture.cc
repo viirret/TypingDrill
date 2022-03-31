@@ -46,13 +46,13 @@ Texture::~Texture()
 
 void Texture::render(int x, int y, SDL_Color color)
 {
-	SDL_Rect src = { 0, 0, 30, 100 };
-	SDL_Rect dst = { x, y, 30, 100 };
+	SDL_Rect src = { 0, 0, width, 100 };
+	SDL_Rect dst = { x, y, width, height };
 
 	// set correct color
 	SDL_SetTextureColorMod(texture, color.r, color.g, color.b);
 		
-	SDL_RenderCopy(Renderer::get(), texture, &src, &dst);
+	SDL_RenderCopy(Renderer::get(), texture, nullptr, &dst);
 }
 
 int Texture::getWidth() { return width; }

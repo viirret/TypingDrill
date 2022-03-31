@@ -7,6 +7,7 @@
 #include <sstream>
 #include <chrono>
 #include <iomanip>
+#include <memory>
 #include "Window.hh"
 #include "FontLoader.hh"
 #include "Texture.hh"

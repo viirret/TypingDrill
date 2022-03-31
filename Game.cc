@@ -19,6 +19,7 @@ Game::Game()
 
 	// create the first sentence
 	createSentence();
+	//wpm.reload("Speed: ", Color::regular);
 
 	startTime = std::chrono::system_clock::now();
 
@@ -110,9 +111,8 @@ void Game::restart()
 		std::cout << getAccuracy() << std::endl;
 		std::cout << getSpeed() << std::endl;
 
-		wpm.reload("Wpm: ", Color::regular);
-		
-		acc.reload(getAccuracy(), Color::regular);
+		//wpm.reload(getSpeed(), Color::regular);
+		//acc.reload(getAccuracy(), Color::regular);
 
 		setup();
 		createSentence();
