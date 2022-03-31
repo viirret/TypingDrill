@@ -20,6 +20,8 @@ Game::Game()
 	// create the first sentence
 	createSentence();
 
+	startTime = std::chrono::system_clock::now();
+
 	checkIndex = 0;
 	failures = 0;
 	close = false;
@@ -57,10 +59,10 @@ void Game::render()
 	}
 
 	// render words per minute
-	wpm.render(0, 0, Color::regular);
+	//wpm.render(0, 0, Color::regular);
 
 	// render accuracy
-	acc.render(Screen::getWidth() / 2, 0, Color::regular);
+	//acc.render(Screen::getWidth() / 2, 0, Color::regular);
 
 	// main rendering
 	Renderer::render();	
@@ -87,7 +89,6 @@ void Game::eventHandler()
 				checkIndex++;
 				drawColor = Color::regular;
 
-				SDL_Log("Correct");
 			}
 
 			// error in writing
@@ -95,7 +96,6 @@ void Game::eventHandler()
 			{
 				drawColor = Color::error;
 				failures++;
-				SDL_Log("Incorrect");
 			}
 		}
 	}
@@ -105,7 +105,10 @@ void Game::restart()
 {
 	if(checkIndex == (int)sentence.length())
 	{
+		endTime = std::chrono::system_clock::now();
+
 		std::cout << getAccuracy() << std::endl;
+		std::cout << getSpeed() << std::endl;
 
 		wpm.reload("Wpm: ", Color::regular);
 		
@@ -113,6 +116,7 @@ void Game::restart()
 
 		setup();
 		createSentence();
+		startTime = std::chrono::system_clock::now();
 	}
 }
 
@@ -137,6 +141,21 @@ std::string Game::getAccuracy()
 	return accuracy;
 }
 
+std::string Game::getSpeed()
+{
+	std::string speed = "Speed: ";
+	int milliseconds = std::chrono::duration_cast<std::chrono::milliseconds>(endTime - startTime).count();
+	double seconds = (double)milliseconds / 1000.00;
+	double ans = 60.00 / seconds * wordCount;
+
+	std::stringstream ss;
+	ss << std::fixed << std::setprecision(2) << ans;
+	speed += ss.str();
+	speed += " wpm";
+
+	return speed;
+}
+
 void Game::setup()
 {
 	failures = 0;
@@ -147,14 +166,11 @@ void Game::setup()
 
 void Game::createSentence()
 {
-	sentence = word.getSentence();
+	sentence = word.getSentence(wordCount);
 
 	for(int i = 0; i < (int)sentence.length(); i++)
 	{
 		colors.push_back(Color::white);
-
-		//SDL_Log("%c", sentence[i]);
-
 		textures.emplace_back(std::string(1, sentence[i]), colors[i]);
 	}
 }

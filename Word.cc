@@ -21,11 +21,11 @@ Word::Word()
 	}
 }
 
-std::string Word::getSentence()
+std::string Word::getSentence(int n)
 {
 	std::string word;
 	
-	for(int i = 0; i < 1; i++)
+	for(int i = 0; i < n; i++)
 	{
 		word += lines[randomLine(0, total_lines)];
 		if(i == 4)

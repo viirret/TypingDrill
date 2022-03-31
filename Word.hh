@@ -12,7 +12,7 @@ class Word
 {
 	public:
 		Word();
-		std::string getSentence();
+		std::string getSentence(int n);
 
 	private:
 		std::ifstream file;

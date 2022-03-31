@@ -5,6 +5,7 @@
 #include <string>
 #include <iostream>
 #include <sstream>
+#include <chrono>
 #include <iomanip>
 #include "Window.hh"
 #include "FontLoader.hh"
@@ -31,13 +32,21 @@ class Game
 		Window window;
 		Word word;
 		std::string sentence;
-		int checkIndex;
-		std::vector<Texture> textures;
-		std::vector<SDL_Color> colors;
 		SDL_Color drawColor;
-		Texture wpm;
-		Texture acc;
-		int failures;
+		int failures, checkIndex;
+		
+		// letter's associated colors
+		std::vector<SDL_Color> colors;
+		
+		// textures
+		std::vector<Texture> textures;
+		Texture wpm, acc;
+
+		// time counting
+		std::chrono::time_point<std::chrono::system_clock> startTime;
+		std::chrono::time_point<std::chrono::system_clock> endTime;
+
+		const int wordCount = 5;
 };
 
 #endif
