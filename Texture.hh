@@ -18,8 +18,10 @@ class Texture
 		Texture(Texture&& tex);
 		~Texture();
 		void render(int x, int y, SDL_Color color);
+		void reload(std::string word, SDL_Color color);
 
 	private:
+		void load(std::string word, SDL_Color color);
 		SDL_Texture* texture;
 };
 

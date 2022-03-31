@@ -23,6 +23,7 @@ Game::Game()
 
 	checkIndex = 0;
 	close = false;
+	drawColor = Color::regular;
 }
 
 Game::~Game()
@@ -49,7 +50,7 @@ void Game::render()
 
 	for(int i = 0; i < (int)textures.size(); i++)
 	{
-		textures[i].render(25 * i, Screen::getHeight() / 2, Color::white);
+		textures[i].render(30 * i, Screen::getHeight() / 2, colors[i]);
 	}
 
 	// main rendering
@@ -64,13 +65,26 @@ void Game::eventHandler()
 
 		if((e.type == SDL_KEYDOWN && e.key.keysym.sym == SDLK_ESCAPE) || e.type == SDL_QUIT)
 			close = true;
-		
+	
 		else if(e.type == SDL_KEYDOWN)
 		{
-			if(e.key.keysym.sym == sentence[checkIndex] || (isspace(sentence[checkIndex]) && e.key.keysym.sym == 32))
+			// regular letter written correctly
+			if((e.key.keysym.sym == sentence[checkIndex]) || (isspace(sentence[checkIndex]) && e.key.keysym.sym == 32))
 			{
+				if(isspace(sentence[checkIndex]) && e.key.keysym.sym == 32)
+					textures.at(checkIndex).reload("_", Color::regular);
+
+				colors[checkIndex] = drawColor;
 				checkIndex++;
+				drawColor = Color::regular;
 				SDL_Log("%s", "Correct!");
+			}
+			
+			// error in writing
+			else
+			{
+				drawColor = Color::error;
+				SDL_Log("%s", "Incorrect");
 			}
 		}
 	}
@@ -79,10 +93,14 @@ void Game::eventHandler()
 bool Game::createSentence()
 {
 	sentence = word.getSentence();
+
 	if(sentence.length() > 0)
 	{
-		for(auto& i : sentence)
-			textures.emplace_back(std::string(1, i), Color::white);
+		for(int i = 0; i < (int)sentence.length(); i++)
+		{
+			colors.push_back(Color::white);
+			textures.emplace_back(std::string(1, sentence[i]), colors[i]);
+		}
 
 		return true;
 	}

@@ -27,6 +27,8 @@ class Game
 		int checkIndex;
 
 		std::vector<Texture> textures;
+		std::vector<SDL_Color> colors;
+		SDL_Color drawColor;
 };
 
 #endif
