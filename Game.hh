@@ -3,6 +3,9 @@
 
 #include <SDL2/SDL.h>
 #include <string>
+#include <iostream>
+#include <sstream>
+#include <iomanip>
 #include "Window.hh"
 #include "FontLoader.hh"
 #include "Texture.hh"
@@ -20,7 +23,10 @@ class Game
 		void render();
 		void eventHandler();
 		void createSentence();
-		void restore();
+		void restart();
+		void setup();
+		std::string getAccuracy();
+		std::string getSpeed();
 		SDL_Event e;
 		Window window;
 		Word word;
@@ -29,6 +35,9 @@ class Game
 		std::vector<Texture> textures;
 		std::vector<SDL_Color> colors;
 		SDL_Color drawColor;
+		Texture wpm;
+		Texture acc;
+		int failures;
 };
 
 #endif

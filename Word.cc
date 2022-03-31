@@ -25,7 +25,7 @@ std::string Word::getSentence()
 {
 	std::string word;
 	
-	for(int i = 0; i < 5; i++)
+	for(int i = 0; i < 1; i++)
 	{
 		word += lines[randomLine(0, total_lines)];
 		if(i == 4)

@@ -22,6 +22,9 @@ void Texture::load(std::string word, SDL_Color color)
 		texture = SDL_CreateTextureFromSurface(Renderer::get(), textSurface);
 		if(!texture)
 			SDL_Log("Unable to create texture from rendered text! SDL_Error: %s\n", SDL_GetError());
+		
+		width = textSurface->w;
+		height = textSurface->h;
 
 		// get rid of the old surface
 		SDL_FreeSurface(textSurface);
@@ -51,5 +54,8 @@ void Texture::render(int x, int y, SDL_Color color)
 		
 	SDL_RenderCopy(Renderer::get(), texture, &src, &dst);
 }
+
+int Texture::getWidth() { return width; }
+int Texture::getHeight() { return height; }
 
 

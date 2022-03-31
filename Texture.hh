@@ -16,13 +16,18 @@ class Texture
 	public:
 		Texture(std::string word, SDL_Color color);
 		Texture(Texture&& tex);
+		Texture(){};
 		~Texture();
 		void render(int x, int y, SDL_Color color);
 		void reload(std::string word, SDL_Color color);
+		int getWidth();
+		int getHeight();
 
 	private:
 		void load(std::string word, SDL_Color color);
 		SDL_Texture* texture;
+		int width;
+		int height;
 };
 
 #endif

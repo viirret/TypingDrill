@@ -21,6 +21,7 @@ Game::Game()
 	createSentence();
 
 	checkIndex = 0;
+	failures = 0;
 	close = false;
 	drawColor = Color::regular;
 }
@@ -37,7 +38,7 @@ Game::~Game()
 
 void Game::update()
 {
-	restore();
+	restart();
 	eventHandler();
 	render();
 }
@@ -48,10 +49,18 @@ void Game::render()
 	Renderer::setColor(64, 64, 64);
 	Renderer::clear();
 
+	// render text
 	for(int i = 0; i < (int)textures.size(); i++)
 	{
-		textures[i].render(30 * i, Screen::getHeight() / 2, colors[i]);
+		//int w = textures[i].getWidth();
+		textures[i].render(i * 30, Screen::getHeight() / 2, colors[i]);
 	}
+
+	// render words per minute
+	wpm.render(0, 0, Color::regular);
+
+	// render accuracy
+	acc.render(Screen::getWidth() / 2, 0, Color::regular);
 
 	// main rendering
 	Renderer::render();	
@@ -77,26 +86,63 @@ void Game::eventHandler()
 				colors[checkIndex] = drawColor;
 				checkIndex++;
 				drawColor = Color::regular;
+
+				SDL_Log("Correct");
 			}
 
 			// error in writing
 			else
 			{
 				drawColor = Color::error;
+				failures++;
+				SDL_Log("Incorrect");
 			}
 		}
 	}
 }
 
-void Game::restore()
+void Game::restart()
 {
 	if(checkIndex == (int)sentence.length())
 	{
-		checkIndex = 0;
-		colors.clear();
-		textures.clear();
+		std::cout << getAccuracy() << std::endl;
+
+		wpm.reload("Wpm: ", Color::regular);
+		
+		acc.reload(getAccuracy(), Color::regular);
+
+		setup();
 		createSentence();
 	}
+}
+
+std::string Game::getAccuracy()
+{
+	std::string accuracy = "Accuracy: ";
+	double acc;
+	failures > 0 ? acc = (1 - (double)failures / (double)sentence.length()) * 100 : acc = 100;
+
+	int temp = acc;
+	double temp2 = acc - temp;
+
+	if(temp2 > 0)
+	{
+		std::stringstream ss;
+		ss << std::fixed << std::setprecision(2) << acc;
+		accuracy += ss.str();
+	}
+	else
+		accuracy += std::to_string(temp);
+
+	return accuracy;
+}
+
+void Game::setup()
+{
+	failures = 0;
+	checkIndex = 0;
+	colors.clear();
+	textures.clear();	
 }
 
 void Game::createSentence()
@@ -106,6 +152,9 @@ void Game::createSentence()
 	for(int i = 0; i < (int)sentence.length(); i++)
 	{
 		colors.push_back(Color::white);
+
+		//SDL_Log("%c", sentence[i]);
+
 		textures.emplace_back(std::string(1, sentence[i]), colors[i]);
 	}
 }
