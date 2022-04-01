@@ -6,10 +6,6 @@ Game::Game()
 	if(SDL_Init(SDL_INIT_VIDEO) < 0)
 		SDL_Log("SDL could not initialize! Error: %s\n", SDL_GetError());
 
-	// initialize PNG loading
-	if(!(IMG_Init(IMG_INIT_PNG) &IMG_INIT_PNG))
-		SDL_Log("SDL_image could not initialize! SDL_Image Error: %s\n", IMG_GetError());
-
 	// initialize SDL_ttf
 	if(TTF_Init() == -1)
 		SDL_Log("SDL_ttf could not initialize! SDL_ttf Error: %s\n", TTF_GetError());
@@ -39,7 +35,6 @@ Game::~Game()
 	
 	// close SDL
 	TTF_Quit();
-	IMG_Quit();
 	SDL_Quit();
 }
 
