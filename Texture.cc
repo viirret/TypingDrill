@@ -10,6 +10,19 @@ Texture::Texture(Texture&& rhs) : texture(rhs.texture)
 	rhs.texture = nullptr;
 }
 
+Texture& Texture::operator=(Texture&& other)
+{
+	texture = other.texture;
+	width = other.width;
+	height = other.height;
+
+	other.texture = nullptr;
+	other.width = 0;
+	other.height = 0;
+
+	return *this;
+}
+
 void Texture::load(std::string word, SDL_Color color)
 {
 	// render text surface
@@ -46,13 +59,13 @@ Texture::~Texture()
 
 void Texture::render(int x, int y, SDL_Color color)
 {
-	SDL_Rect src = { 0, 0, width, 100 };
+	SDL_Rect src = { 0, 0, width, height };
 	SDL_Rect dst = { x, y, width, height };
 
 	// set correct color
 	SDL_SetTextureColorMod(texture, color.r, color.g, color.b);
 		
-	SDL_RenderCopy(Renderer::get(), texture, nullptr, &dst);
+	SDL_RenderCopy(Renderer::get(), texture, &src, &dst);
 }
 
 int Texture::getWidth() { return width; }

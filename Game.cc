@@ -19,7 +19,10 @@ Game::Game()
 
 	// create the first sentence
 	createSentence();
-	//wpm.reload("Speed: ", Color::regular);
+
+	// set textures to empty
+	wpm.reload("Speed: ", Color::regular);
+	acc.reload("Accuracy: ", Color::regular);
 
 	startTime = std::chrono::system_clock::now();
 
@@ -55,15 +58,14 @@ void Game::render()
 	// render text
 	for(int i = 0; i < (int)textures.size(); i++)
 	{
-		//int w = textures[i].getWidth();
 		textures[i].render(i * 30, Screen::getHeight() / 2, colors[i]);
 	}
 
 	// render words per minute
-	//wpm.render(0, 0, Color::regular);
+	wpm.render(0, 0, Color::regular);
 
 	// render accuracy
-	//acc.render(Screen::getWidth() / 2, 0, Color::regular);
+	acc.render(Screen::getWidth() / 2, 0, Color::regular);
 
 	// main rendering
 	Renderer::render();	
@@ -89,7 +91,6 @@ void Game::eventHandler()
 				colors[checkIndex] = drawColor;
 				checkIndex++;
 				drawColor = Color::regular;
-
 			}
 
 			// error in writing
@@ -108,11 +109,8 @@ void Game::restart()
 	{
 		endTime = std::chrono::system_clock::now();
 
-		std::cout << getAccuracy() << std::endl;
-		std::cout << getSpeed() << std::endl;
-
-		//wpm.reload(getSpeed(), Color::regular);
-		//acc.reload(getAccuracy(), Color::regular);
+		wpm.reload(getSpeed(), Color::regular);
+		acc.reload(getAccuracy(), Color::regular);
 
 		setup();
 		createSentence();
@@ -167,11 +165,14 @@ void Game::setup()
 void Game::createSentence()
 {
 	sentence = word.getSentence(wordCount);
+	textures.resize(sentence.length());
 
 	for(int i = 0; i < (int)sentence.length(); i++)
 	{
 		colors.push_back(Color::white);
-		textures.emplace_back(std::string(1, sentence[i]), colors[i]);
+		Texture t(std::string(1, sentence[i]), colors[i]);
+
+		textures[i] = std::move(t);
 	}
 }
 

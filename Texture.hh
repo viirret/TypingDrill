@@ -18,6 +18,7 @@ class Texture
 		Texture(Texture&& tex);
 		Texture(){};
 		~Texture();
+		Texture& operator=(Texture&& other);
 		void render(int x, int y, SDL_Color color);
 		void reload(std::string word, SDL_Color color);
 		int getWidth();
@@ -25,7 +26,7 @@ class Texture
 
 	private:
 		void load(std::string word, SDL_Color color);
-		SDL_Texture* texture;
+		SDL_Texture* texture = nullptr;
 		int width;
 		int height;
 };
