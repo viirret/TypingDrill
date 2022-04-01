@@ -34,7 +34,7 @@ class Game
 		Word word;
 		std::string sentence;
 		SDL_Color drawColor;
-		int failures, checkIndex;
+		int failures, checkIndex, lastLetter;
 		
 		// letter's associated colors
 		std::vector<SDL_Color> colors;
@@ -47,7 +47,7 @@ class Game
 		std::chrono::time_point<std::chrono::system_clock> startTime;
 		std::chrono::time_point<std::chrono::system_clock> endTime;
 
-		const int wordCount = 5;
+		const int wordCount = 15;
 };
 
 #endif

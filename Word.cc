@@ -16,8 +16,11 @@ Word::Word()
 
 	while(std::getline(file, line))
 	{
-		total_lines++;
-		lines.push_back(line);
+		if(line.length() < 10)
+		{
+			total_lines++;
+			lines.push_back(line);
+		}
 	}
 }
 

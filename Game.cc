@@ -28,6 +28,7 @@ Game::Game()
 
 	checkIndex = 0;
 	failures = 0;
+	lastLetter = 1000;
 	close = false;
 	drawColor = Color::regular;
 }
@@ -44,7 +45,6 @@ Game::~Game()
 
 void Game::update()
 {
-	restart();
 	eventHandler();
 	render();
 }
@@ -55,17 +55,49 @@ void Game::render()
 	Renderer::setColor(64, 64, 64);
 	Renderer::clear();
 
+	int a = 0;
+	int b = 0;
+
+	lastLetter = sentence.length();
+
 	// render text
 	for(int i = 0; i < (int)textures.size(); i++)
 	{
-		textures[i].render(i * 30, Screen::getHeight() / 2, colors[i]);
+		int w = textures[i].getWidth();
+
+		// first row
+		if((Screen::getWidth() / 20 + i * w) <= Screen::getWidth() - Screen::getWidth() / 20)
+		{
+			textures[i].render(Screen::getWidth() / 20 + i * w, Screen::getHeight() / 2.25, colors[i]);
+		}
+
+		// second row
+		else if((Screen::getWidth() / 20 + a * w) <= Screen::getWidth() - Screen::getWidth() / 20)
+		{
+			textures[i].render(Screen::getWidth() / 20 + a * w, Screen::getHeight() / 2, colors[i]);
+			a++;
+		}
+
+		// third row
+		else if((Screen::getWidth() / 20 + b * w) <= Screen::getWidth() - Screen::getWidth() / 20)
+		{
+			textures[i].render(Screen::getWidth() / 20 + b * w, Screen::getHeight() / 1.80, colors[i]);
+			b++;
+		}
+		else if(i <= lastLetter)
+		{
+			lastLetter = i;
+		}
 	}
 
-	// render words per minute
-	wpm.render(0, 0, Color::regular);
+	if(lastLetter >= 100)
+	{
+		// render words per minute
+		wpm.render(Screen::getWidth() / 20, Screen::getHeight() / 10, Color::regular);
 
-	// render accuracy
-	acc.render(Screen::getWidth() / 2, 0, Color::regular);
+		// render accuracy
+		acc.render(Screen::getWidth() / 2, Screen::getHeight() / 10, Color::regular);
+	}
 
 	// main rendering
 	Renderer::render();	
@@ -91,6 +123,9 @@ void Game::eventHandler()
 				colors[checkIndex] = drawColor;
 				checkIndex++;
 				drawColor = Color::regular;
+
+				if(checkIndex >= lastLetter)
+					restart();
 			}
 
 			// error in writing
@@ -105,24 +140,21 @@ void Game::eventHandler()
 
 void Game::restart()
 {
-	if(checkIndex == (int)sentence.length())
-	{
-		endTime = std::chrono::system_clock::now();
+	endTime = std::chrono::system_clock::now();
 
-		wpm.reload(getSpeed(), Color::regular);
-		acc.reload(getAccuracy(), Color::regular);
+	wpm.reload(getSpeed(), Color::regular);
+	acc.reload(getAccuracy(), Color::regular);
 
-		setup();
-		createSentence();
-		startTime = std::chrono::system_clock::now();
-	}
+	setup();
+	createSentence();
+	startTime = std::chrono::system_clock::now();
 }
 
 std::string Game::getAccuracy()
 {
 	std::string accuracy = "Accuracy: ";
 	double acc;
-	failures > 0 ? acc = (1 - (double)failures / (double)sentence.length()) * 100 : acc = 100;
+	failures > 0 ? acc = (1 - (double)failures / (double)lastLetter) * 100 : acc = 100;
 
 	int temp = acc;
 	double temp2 = acc - temp;
@@ -141,10 +173,11 @@ std::string Game::getAccuracy()
 
 std::string Game::getSpeed()
 {
+	double ans;
 	std::string speed = "Speed: ";
 	int milliseconds = std::chrono::duration_cast<std::chrono::milliseconds>(endTime - startTime).count();
 	double seconds = (double)milliseconds / 1000.00;
-	double ans = 60.00 / seconds * wordCount;
+	ans = 60.00 / seconds * wordCount;
 
 	std::stringstream ss;
 	ss << std::fixed << std::setprecision(2) << ans;
@@ -170,8 +203,8 @@ void Game::createSentence()
 	for(int i = 0; i < (int)sentence.length(); i++)
 	{
 		colors.push_back(Color::white);
-		Texture t(std::string(1, sentence[i]), colors[i]);
 
+		Texture t(std::string(1, sentence[i]), colors[i]);
 		textures[i] = std::move(t);
 	}
 }
