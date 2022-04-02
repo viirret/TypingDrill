@@ -8,7 +8,7 @@ bool FontLoader::setup()
 	bool w = true;
 
 	// open the font
-	font = TTF_OpenFont("font.ttf", 28);
+	font = TTF_OpenFont("assets/font.ttf", 28);
 
 	if(!font)
 	{

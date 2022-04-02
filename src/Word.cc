@@ -12,7 +12,7 @@ Word::Word()
 {
 	total_lines = 0;
 	std::string line;
-	file.open("words.txt");
+	file.open("assets/words.txt");
 
 	while(std::getline(file, line))
 	{

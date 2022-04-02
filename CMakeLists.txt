@@ -7,14 +7,14 @@ find_package(SDL2 REQUIRED)
 
 include_directories(${SDL2_INCLUDE_DIRS} ${SDL2IMAGE_INCLUDE_DIRS} ${SDL2_TTF_INCLUDE_DIRS})
 add_executable(ProTyper
-	FontLoader.cc
-	main.cc
-	Renderer.cc
-	Texture.cc
-	Window.cc
-	Game.cc
-	ScreenSize.cc
-	Word.cc
+	src/FontLoader.cc
+	src/main.cc
+	src/Renderer.cc
+	src/Texture.cc
+	src/Window.cc
+	src/Game.cc
+	src/ScreenSize.cc
+	src/Word.cc
 	)
 
 target_link_libraries(ProTyper ${SDL2_LIBRARIES} -lSDL2_image -lSDL2_ttf)
