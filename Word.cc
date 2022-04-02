@@ -31,6 +31,7 @@ std::string Word::getSentence(int n)
 	for(int i = 0; i < n; i++)
 	{
 		word += lines[randomLine(0, total_lines)];
+		word += " ";
 		if(i == 4)
 			word.pop_back();
 	}

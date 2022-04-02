@@ -12,7 +12,7 @@ bool FontLoader::setup()
 
 	if(!font)
 	{
-		SDL_Log("Failed to load the font! SDL_ttd Error: %s\n", TTF_GetError());
+		SDL_Log("Failed to load the font! SDL_ttf Error: %s\n", TTF_GetError());
 		w = false;
 	}
 
