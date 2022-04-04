@@ -18,4 +18,4 @@ sudo pacman -S sdl2_ttf
 2. Download files
 3. Go to the directory with program's files, and run cmake with **cmake .**
 4. Compile with created Makefile with **make**
-5. Run the executable **./Protyper**
+5. Run the executable **./TypingDrill**
