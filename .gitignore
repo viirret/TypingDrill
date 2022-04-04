@@ -7,7 +7,7 @@ cmake_install.cmake
 Makefile
 
 # ignore executable
-ProTyper
+TypingDrill
 
 # ignore metadata from valgrind
 vgcore.*
